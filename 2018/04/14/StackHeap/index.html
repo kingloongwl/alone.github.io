@@ -11,10 +11,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/ant-128*128.png?v=7.3.0">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/ant-32*32.png?v=7.3.0">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/ant-16*16.png?v=7.3.0">
-  <link rel="mask-icon" href="/images/ant-128*128.png?v=7.3.0" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/ant-128_128.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/ant-32_32.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/ant-16_16.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/ant-128_128.png?v=7.3.0" color="#222">
 
 <link rel="stylesheet" href="/css/main.css?v=7.3.0">
 
@@ -55,20 +55,20 @@
   };
 </script>
 
-  <meta name="description" content="栈和堆的概念从何而来，已经不清楚了，只记得刚学编程时，看一本《C++编程思想》的书，里面有提到堆和栈，因为没有这方面的概念，所以看的似懂非懂，只知道这是内存上的某个东西，但是这个“堆”和“栈”具体是什么就不得而知了。 使用 C++ 的时候，经常会使用局部变量，以及以new关键字生成的指针变量。声明完这些变量之后就可以使用了，然而很多人在使用完之后就弃之不顾了。如果使用的是其它带垃圾回收机制的高级语">
+  <meta name="description" content="栈和堆的概念从何而来，已经不清楚了，只记得刚学编程时，看一本《C++编程思想》的书，里面有提到堆和栈，因为没有这方面的概念，所以看的似懂非懂，只知道这是内存上的某个东西，但是这个“堆”和“栈”具体是什么就不得而知了。使用 C++ 的时候，经常会使用局部变量，以及以new关键字生成的指针变量。声明完这些变量之后就可以使用了，然而很多人在使用完之后就弃之不顾了。如果使用的是其它带垃圾回收机制的高级语言">
 <meta name="keywords" content="C++">
 <meta property="og:type" content="article">
 <meta property="og:title" content="栈和堆">
 <meta property="og:url" content="http://kingloongwl.com/2018/04/14/StackHeap/index.html">
-<meta property="og:site_name" content="kingloongwl">
-<meta property="og:description" content="栈和堆的概念从何而来，已经不清楚了，只记得刚学编程时，看一本《C++编程思想》的书，里面有提到堆和栈，因为没有这方面的概念，所以看的似懂非懂，只知道这是内存上的某个东西，但是这个“堆”和“栈”具体是什么就不得而知了。 使用 C++ 的时候，经常会使用局部变量，以及以new关键字生成的指针变量。声明完这些变量之后就可以使用了，然而很多人在使用完之后就弃之不顾了。如果使用的是其它带垃圾回收机制的高级语">
+<meta property="og:site_name" content="子影的影子">
+<meta property="og:description" content="栈和堆的概念从何而来，已经不清楚了，只记得刚学编程时，看一本《C++编程思想》的书，里面有提到堆和栈，因为没有这方面的概念，所以看的似懂非懂，只知道这是内存上的某个东西，但是这个“堆”和“栈”具体是什么就不得而知了。使用 C++ 的时候，经常会使用局部变量，以及以new关键字生成的指针变量。声明完这些变量之后就可以使用了，然而很多人在使用完之后就弃之不顾了。如果使用的是其它带垃圾回收机制的高级语言">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://kingloongwl.com/2018/04/14/StackHeap/alloc.png">
 <meta property="og:image" content="http://kingloongwl.com/2018/04/14/StackHeap/dealloc.png">
 <meta property="og:updated_time" content="2018-04-17T14:31:46.643Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="栈和堆">
-<meta name="twitter:description" content="栈和堆的概念从何而来，已经不清楚了，只记得刚学编程时，看一本《C++编程思想》的书，里面有提到堆和栈，因为没有这方面的概念，所以看的似懂非懂，只知道这是内存上的某个东西，但是这个“堆”和“栈”具体是什么就不得而知了。 使用 C++ 的时候，经常会使用局部变量，以及以new关键字生成的指针变量。声明完这些变量之后就可以使用了，然而很多人在使用完之后就弃之不顾了。如果使用的是其它带垃圾回收机制的高级语">
+<meta name="twitter:description" content="栈和堆的概念从何而来，已经不清楚了，只记得刚学编程时，看一本《C++编程思想》的书，里面有提到堆和栈，因为没有这方面的概念，所以看的似懂非懂，只知道这是内存上的某个东西，但是这个“堆”和“栈”具体是什么就不得而知了。使用 C++ 的时候，经常会使用局部变量，以及以new关键字生成的指针变量。声明完这些变量之后就可以使用了，然而很多人在使用完之后就弃之不顾了。如果使用的是其它带垃圾回收机制的高级语言">
 <meta name="twitter:image" content="http://kingloongwl.com/2018/04/14/StackHeap/alloc.png">
   <link rel="canonical" href="http://kingloongwl.com/2018/04/14/StackHeap/">
 
@@ -84,7 +84,7 @@
   };
 </script>
 
-  <title>栈和堆 | kingloongwl</title>
+  <title>栈和堆 | 子影的影子</title>
   
 
 
@@ -133,11 +133,11 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">kingloongwl</span>
+        <span class="site-title">子影的影子</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
-        <p class="site-subtitle">Alone With You</p>
+        <p class="site-subtitle">偶尔带走业余的时间</p>
       
   </div>
 
@@ -215,13 +215,13 @@
     <link itemprop="mainEntityOfPage" href="http://kingloongwl.com/2018/04/14/StackHeap/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Alone">
+      <meta itemprop="name" content="Logan">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/ant-128*128.png">
+      <meta itemprop="image" content="/images/ant-128_128.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="kingloongwl">
+      <meta itemprop="name" content="子影的影子">
     </span>
       <header class="post-header">
 
@@ -288,8 +288,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>栈和堆的概念从何而来，已经不清楚了，只记得刚学编程时，看一本《C++编程思想》的书，里面有提到堆和栈，因为没有这方面的概念，所以看的似懂非懂，只知道这是内存上的某个东西，但是这个“堆”和“栈”具体是什么就不得而知了。</p>
-<p>使用 C++ 的时候，经常会使用局部变量，以及以new关键字生成的指针变量。声明完这些变量之后就可以使用了，然而很多人在使用完之后就弃之不顾了。如果使用的是其它带垃圾回收机制的高级语言那这么做是没问题的，但是现在使用的是C++，这也是C++与其它高级语言的不同之处，那就是它不会去自动释放某些内存，而需要程序员去写代码释放，否则会造成内存泄露。</p>
+        <p>栈和堆的概念从何而来，已经不清楚了，只记得刚学编程时，看一本《C++编程思想》的书，里面有提到堆和栈，因为没有这方面的概念，所以看的似懂非懂，只知道这是内存上的某个东西，但是这个“堆”和“栈”具体是什么就不得而知了。</p><p>使用 C++ 的时候，经常会使用局部变量，以及以new关键字生成的指针变量。声明完这些变量之后就可以使用了，然而很多人在使用完之后就弃之不顾了。如果使用的是其它带垃圾回收机制的高级语言那这么做是没问题的，但是现在使用的是C++，这也是C++与其它高级语言的不同之处，那就是它不会去自动释放某些内存，而需要程序员去写代码释放，否则会造成内存泄露。</p><a id="more"></a>
+
 <p>虽然现在的操作系统以及硬件配置已经很强悍了，即使有内存泄露也可以忽略，但是你要想像到，对于一个桌面端的程序，可以重新启动，重新刷新内存。而对于一个服务端或需要长时间运行的程序对这方面的要求就很高了，一个程序在后台不停的吃掉机器的内存，不仅程序自身会运行缓慢，还会影响其它程序，从而造成严重后果。再者，作为一个程序员，对于内存使用这方面一定要谨慎，这也是个人的职业素养，不能视而不见。</p>
 <h3 id="内存回收"><a href="#内存回收" class="headerlink" title="内存回收"></a>内存回收</h3><p>那么究竟是哪些变量可以使用后不管，而哪些变量需要很小心的使用完成后将其释放。这就是栈和堆的区别了。</p>
 <ul>
@@ -325,6 +325,22 @@
     
     
         
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Logan</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://kingloongwl.com/2018/04/14/StackHeap/" title="栈和堆">http://kingloongwl.com/2018/04/14/StackHeap/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+
       
 
       <footer class="post-footer">
@@ -405,9 +421,9 @@
 
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image"
-      src="/images/ant-128*128.png"
-      alt="Alone">
-  <p class="site-author-name" itemprop="name">Alone</p>
+      src="/images/ant-128_128.png"
+      alt="Logan">
+  <p class="site-author-name" itemprop="name">Logan</p>
   <div class="site-description motion-element" itemprop="description"></div>
 </div>
   <nav class="site-state motion-element">
@@ -444,6 +460,11 @@
       </div>
     
   </nav>
+  <div class="cc-license motion-element" itemprop="license">
+    
+  
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
 
 
 
@@ -481,7 +502,7 @@
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Alone</span>
+  <span class="author" itemprop="copyrightHolder">Logan</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.7.0</div>
   <span class="post-meta-divider">|</span>
