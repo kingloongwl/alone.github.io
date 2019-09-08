@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="generator" content="Hexo 3.7.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/ant-128_128.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/ant-32_32.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/ant-16_16.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/ant-128_128.png?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    save_scroll: false,
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="数据的范围根据字节数，机器位数，有符号、无符而不一样，一个典型的范围值如下所示。   类型 字节数（64位） 最小值 最大值     char 1 -128 127   unsigned char 1 0 255   short 2 -32768 32767   unsigned short 2 0 65535   int 4 -2147483648 2147483647   unsigned 4">
+<meta name="keywords" content="基础,笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="无符号有符号表示">
+<meta property="og:url" content="http://kingloongwl.com/2019/09/03/unsigned_signed/index.html">
+<meta property="og:site_name" content="子影的影子">
+<meta property="og:description" content="数据的范围根据字节数，机器位数，有符号、无符而不一样，一个典型的范围值如下所示。   类型 字节数（64位） 最小值 最大值     char 1 -128 127   unsigned char 1 0 255   short 2 -32768 32767   unsigned short 2 0 65535   int 4 -2147483648 2147483647   unsigned 4">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://kingloongwl.com/2019/09/03/unsigned_signed/1.png">
+<meta property="og:image" content="http://kingloongwl.com/2019/09/03/unsigned_signed/2.png">
+<meta property="og:image" content="http://kingloongwl.com/2019/09/03/unsigned_signed/3.png">
+<meta property="og:image" content="http://kingloongwl.com/2019/09/03/unsigned_signed/4.png">
+<meta property="og:updated_time" content="2019-09-08T23:57:02.515Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="无符号有符号表示">
+<meta name="twitter:description" content="数据的范围根据字节数，机器位数，有符号、无符而不一样，一个典型的范围值如下所示。   类型 字节数（64位） 最小值 最大值     char 1 -128 127   unsigned char 1 0 255   short 2 -32768 32767   unsigned short 2 0 65535   int 4 -2147483648 2147483647   unsigned 4">
+<meta name="twitter:image" content="http://kingloongwl.com/2019/09/03/unsigned_signed/1.png">
+  <link rel="canonical" href="http://kingloongwl.com/2019/09/03/unsigned_signed/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>无符号有符号表示 | 子影的影子</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <div class="container sidebar-position-left">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">子影的影子</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">偶尔带走业余的时间</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content page-post-detail">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://kingloongwl.com/2019/09/03/unsigned_signed/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Logan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/ant-128_128.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="子影的影子">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">无符号有符号表示
+
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-09-03 07:46:15" itemprop="dateCreated datePublished" datetime="2019-09-03T07:46:15+08:00">2019-09-03</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-09-09 07:57:02" itemprop="dateModified" datetime="2019-09-09T07:57:02+08:00">2019-09-09</time>
+              </span>
+            
+          
+
+          
+            
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/09/03/unsigned_signed/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/09/03/unsigned_signed/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>数据的范围根据字节数，机器位数，有符号、无符而不一样，一个典型的范围值如下所示。</p><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>字节数（64位）</th>
+<th>最小值</th>
+<th>最大值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>char</td>
+<td>1</td>
+<td>-128</td>
+<td>127</td>
+</tr>
+<tr>
+<td>unsigned char</td>
+<td>1</td>
+<td>0</td>
+<td>255</td>
+</tr>
+<tr>
+<td>short</td>
+<td>2</td>
+<td>-32768</td>
+<td>32767</td>
+</tr>
+<tr>
+<td>unsigned short</td>
+<td>2</td>
+<td>0</td>
+<td>65535</td>
+</tr>
+<tr>
+<td>int</td>
+<td>4</td>
+<td>-2147483648</td>
+<td>2147483647</td>
+</tr>
+<tr>
+<td>unsigned</td>
+<td>4</td>
+<td>0</td>
+<td>4294967295</td>
+</tr>
+<tr>
+<td>long</td>
+<td>8</td>
+<td>-9223372036854775808</td>
+<td>92233720368547758087</td>
+</tr>
+<tr>
+<td>unsigned long</td>
+<td>8</td>
+<td>0</td>
+<td>18446744073709551615</td>
+</tr>
+<tr>
+<td>int32_t</td>
+<td>4</td>
+<td>-2147483648</td>
+<td>2147483647</td>
+</tr>
+<tr>
+<td>uint32_t</td>
+<td>4</td>
+<td>0</td>
+<td>4294967295</td>
+</tr>
+<tr>
+<td>int64_t</td>
+<td>8</td>
+<td>-9223372036854775808</td>
+<td>92233720368547758087</td>
+</tr>
+<tr>
+<td>uint64_t</td>
+<td>8</td>
+<td>0</td>
+<td>18446744073709551615</td>
+</tr>
+</tbody>
+</table><a id="more"></a>
+
+<p>同一种类型有符号无符号所占用的字节是一样的，但是它们表示的范围不一样，为什么为产生这样的差距，这要从机器表示说起。</p>
+<h2 id="数据的机器表示"><a href="#数据的机器表示" class="headerlink" title="数据的机器表示"></a>数据的机器表示</h2><p>数据在计算机内部都是以二进制来表示的，范围由位数决定。下面以short类型来说明无符号数，有符号数的机器表示。</p>
+<h3 id="无符号数"><a href="#无符号数" class="headerlink" title="无符号数"></a>无符号数</h3><p>unsigned short类型占了两个字节，也就是16位，那么它所能表示的范围就是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">00000000 00000000 ~ 11111111 11111111</span><br></pre></td></tr></table></figure>
+<p>换算成十进制就是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0　~　65535</span><br></pre></td></tr></table></figure>
+<p>对于无符号数而言，二进制到十进制的转换如下，<code>w</code>表示位数</p>
+<p><img src="/2019/09/03/unsigned_signed/1.png" alt=""></p>
+<h3 id="有符号数"><a href="#有符号数" class="headerlink" title="有符号数"></a>有符号数</h3><p>有符号数与无符号数的区别在于，它的最高位表示的是符号，如果第一位是<code>0</code>那么与无符号数是一样的，如果第一位是<code>１</code>那么表示的是负数。所以对于short类型的有符号数有两个区间</p>
+<p><strong>最高位为0</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">00000000 00000000 ~ 01111111 1111111 =&gt; 0 ~ 32767</span><br></pre></td></tr></table></figure>
+<p><strong>最高位为1</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10000000 0000000 ～ 11111111 11111111 =&gt;　-32768 ～ －1</span><br></pre></td></tr></table></figure>
+<p>所以对于有符号数而言，二进制到十进制的转换公式如下</p>
+<p><img src="/2019/09/03/unsigned_signed/2.png" alt=""></p>
+<blockquote>
+<p>有符号数的这种方式叫做补码表示，以前还有其它的表示，如反码表示，原码表示等，但是这些表示对于0的表示不唯一，+0 -0 分别用不同的机器码表示，所以现在基本上都使用补码表示法了。</p>
+</blockquote>
+<h2 id="数据转换"><a href="#数据转换" class="headerlink" title="数据转换"></a>数据转换</h2><h3 id="转换原理"><a href="#转换原理" class="headerlink" title="转换原理"></a>转换原理</h3><p>有时候会使用强制转换对数字进行转换，如以下的程序。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">short</span> m = <span class="number">-12345</span>;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> n = (<span class="keyword">unsigned</span> <span class="keyword">short</span>)m;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"m:"</span> &lt;&lt; m &lt;&lt; <span class="string">" n:"</span>&lt;&lt; n &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>程序的输出结果是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m:-12345 n:53191</span><br></pre></td></tr></table></figure>
+<p>对于有符号的<code>-12345</code>而言，它的二进制是<code>11001111 11000111</code></p>
+<p>对于无符号的<code>53191</code>而言，它的二进制是<code>11001111 11000111</code></p>
+<p>所以，<strong>强制类型转换保持二进制数字位值不变，只是改变了对位值的解释方式</strong></p>
+<h3 id="转换规则"><a href="#转换规则" class="headerlink" title="转换规则"></a>转换规则</h3><p>根据以上原理，可得出以下规则</p>
+<p>有符号数<code>x</code>转无符号值</p>
+<p><img src="/2019/09/03/unsigned_signed/3.png" alt=""></p>
+<p>无符号数<code>x</code>转有符号数时，TMax是有符号数的最大值</p>
+<p><img src="/2019/09/03/unsigned_signed/4.png" alt=""></p>
+<h2 id="扩展与截断"><a href="#扩展与截断" class="headerlink" title="扩展与截断"></a>扩展与截断</h2><h3 id="字节扩展"><a href="#字节扩展" class="headerlink" title="字节扩展"></a>字节扩展</h3><p>字节扩展对于无符号数来说，比较简单，只是单纯的在高位补0，补够位数即可。</p>
+<p>对于有符号数而言，需要看最高位是什么，如果最高位是1，则全部补1，如果是0则全部补0。</p>
+<p>那么一个数即进行了字节扩展和无符号有符号转换又该如何，那一个比较优先？例如从一个short（2个字节有符号）类型强制转换为unsigned int（4个字节无符号）类型时。当碰到这种情况需要先进行位的扩展，然后再进行无符号有符号转换。举例来说：</p>
+<p>short类型是<code>-12345</code>，它的二进制是<code>11001111 11000111</code>，将它转为unsigned int时。</p>
+<p>位扩展变为：<code>11111111 11111111 11001111 11000111</code>还是<code>-12345</code></p>
+<p>转为无符号：<code>4294954950</code></p>
+<h3 id="字节截断"><a href="#字节截断" class="headerlink" title="字节截断"></a>字节截断</h3><p>字节截断就是将高位的位数截断，这种做法会丢失高位的数据，很容易造成数值的改变。</p>
+<h2 id="建议"><a href="#建议" class="headerlink" title="建议"></a>建议</h2><p>无符号数有许多细微的特性，而且有符号无符号，字节扩展截断等隐式的转换操作，很容易造成隐患和漏洞，而且一旦出问题，非常难找，所以在程序中除了位的相关运算之外，绝不使用无符号数来进行运算。</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Logan</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://kingloongwl.com/2019/09/03/unsigned_signed/" title="无符号有符号表示">http://kingloongwl.com/2019/09/03/unsigned_signed/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/基础/" rel="tag"># 基础</a>
+            
+              <a href="/tags/笔记/" rel="tag"># 笔记</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/08/26/HelloWorldHardFlow/" rel="next" title="HelloWorld硬件流程">
+                  <i class="fa fa-chevron-left"></i> HelloWorld硬件流程
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="comments"></div>
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/ant-128_128.png"
+      alt="Logan">
+  <p class="site-author-name" itemprop="name">Logan</p>
+  <div class="site-description motion-element" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="cc-license motion-element" itemprop="license">
+    
+  
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据的机器表示"><span class="nav-number">1.</span> <span class="nav-text">数据的机器表示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#无符号数"><span class="nav-number">1.1.</span> <span class="nav-text">无符号数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有符号数"><span class="nav-number">1.2.</span> <span class="nav-text">有符号数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据转换"><span class="nav-number">2.</span> <span class="nav-text">数据转换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#转换原理"><span class="nav-number">2.1.</span> <span class="nav-text">转换原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#转换规则"><span class="nav-number">2.2.</span> <span class="nav-text">转换规则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展与截断"><span class="nav-number">3.</span> <span class="nav-text">扩展与截断</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字节扩展"><span class="nav-number">3.1.</span> <span class="nav-text">字节扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字节截断"><span class="nav-number">3.2.</span> <span class="nav-text">字节截断</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建议"><span class="nav-number">4.</span> <span class="nav-text">建议</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Logan</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.7.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+      </div>
+
+    
+
+  </div>
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+<script src="/js/utils.js?v=7.3.0"></script>
+  <script src="/js/motion.js?v=7.3.0"></script>
+
+
+  <script src="/js/schemes/muse.js?v=7.3.0"></script>
+
+
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+  
+  <script src="/js/scrollspy.js?v=7.3.0"></script>
+<script src="/js/post-details.js?v=7.3.0"></script>
+
+
+    
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', function() {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'PSbX4S0UJk5WF4QjfJs7SaDG-gzGzoHsz',
+    appKey: 'ppDJEliGFf8lMYSITUYdSsJx',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: 'zh-cn' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>
