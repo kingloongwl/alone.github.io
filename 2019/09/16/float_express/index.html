@@ -55,24 +55,28 @@
   };
 </script>
 
-  <meta name="description" content="看《深入理解计算机系统》，开篇讲述了HelloWorld程序在计算机硬件（磁盘／主存／CPU）中的装载运行过程，比较底层的知识，特记录一下。源代码如下：1234567#include &amp;lt;stdio.h&amp;gt;int main()&amp;#123;    printf(&amp;quot;hello world\n&amp;quot;);    return 0;&amp;#125;">
-<meta name="keywords" content="基础,笔记">
+  <meta name="description" content="浮点数常用的类型有float（4个字节）、double（8个字节），符点数类型的二进制表示相对比整型来说会复杂一些。通用表示公式为：上标S表示符号位，M表示尾数，E表示指数。不同的类型，用于表示上述三个数字的位数是不一样的。对于float而言，最高位表示符号位，然后的8位表示指数位，最后23位表示尾数位。">
+<meta name="keywords" content="笔记，底层，基础">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HelloWorld硬件流程">
-<meta property="og:url" content="http://kingloongwl.com/2019/08/26/HelloWorldHardFlow/index.html">
+<meta property="og:title" content="浮点数机器表示">
+<meta property="og:url" content="http://kingloongwl.com/2019/09/16/float_express/index.html">
 <meta property="og:site_name" content="子影的影子">
-<meta property="og:description" content="看《深入理解计算机系统》，开篇讲述了HelloWorld程序在计算机硬件（磁盘／主存／CPU）中的装载运行过程，比较底层的知识，特记录一下。源代码如下：1234567#include &amp;lt;stdio.h&amp;gt;int main()&amp;#123;    printf(&amp;quot;hello world\n&amp;quot;);    return 0;&amp;#125;">
+<meta property="og:description" content="浮点数常用的类型有float（4个字节）、double（8个字节），符点数类型的二进制表示相对比整型来说会复杂一些。通用表示公式为：上标S表示符号位，M表示尾数，E表示指数。不同的类型，用于表示上述三个数字的位数是不一样的。对于float而言，最高位表示符号位，然后的8位表示指数位，最后23位表示尾数位。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://kingloongwl.com/2019/08/26/HelloWorldHardFlow/0.png">
-<meta property="og:image" content="http://kingloongwl.com/2019/08/26/HelloWorldHardFlow/1.png">
-<meta property="og:image" content="http://kingloongwl.com/2019/08/26/HelloWorldHardFlow/2.png">
-<meta property="og:image" content="http://kingloongwl.com/2019/08/26/HelloWorldHardFlow/3.png">
-<meta property="og:updated_time" content="2019-08-26T23:35:15.835Z">
+<meta property="og:image" content="http://kingloongwl.com/2019/09/16/float_express/1.png">
+<meta property="og:image" content="http://kingloongwl.com/2019/09/16/float_express/2.png">
+<meta property="og:image" content="http://kingloongwl.com/2019/09/16/float_express/3.png">
+<meta property="og:image" content="http://kingloongwl.com/2019/09/16/float_express/4.png">
+<meta property="og:image" content="http://kingloongwl.com/2019/09/16/float_express/5.png">
+<meta property="og:image" content="http://kingloongwl.com/2019/09/16/float_express/6.png">
+<meta property="og:image" content="http://kingloongwl.com/2019/09/16/float_express/7.png">
+<meta property="og:image" content="http://kingloongwl.com/2019/09/16/float_express/8.png">
+<meta property="og:updated_time" content="2019-09-16T00:00:10.217Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HelloWorld硬件流程">
-<meta name="twitter:description" content="看《深入理解计算机系统》，开篇讲述了HelloWorld程序在计算机硬件（磁盘／主存／CPU）中的装载运行过程，比较底层的知识，特记录一下。源代码如下：1234567#include &amp;lt;stdio.h&amp;gt;int main()&amp;#123;    printf(&amp;quot;hello world\n&amp;quot;);    return 0;&amp;#125;">
-<meta name="twitter:image" content="http://kingloongwl.com/2019/08/26/HelloWorldHardFlow/0.png">
-  <link rel="canonical" href="http://kingloongwl.com/2019/08/26/HelloWorldHardFlow/">
+<meta name="twitter:title" content="浮点数机器表示">
+<meta name="twitter:description" content="浮点数常用的类型有float（4个字节）、double（8个字节），符点数类型的二进制表示相对比整型来说会复杂一些。通用表示公式为：上标S表示符号位，M表示尾数，E表示指数。不同的类型，用于表示上述三个数字的位数是不一样的。对于float而言，最高位表示符号位，然后的8位表示指数位，最后23位表示尾数位。">
+<meta name="twitter:image" content="http://kingloongwl.com/2019/09/16/float_express/1.png">
+  <link rel="canonical" href="http://kingloongwl.com/2019/09/16/float_express/">
 
 
 <script id="page-configurations">
@@ -86,7 +90,7 @@
   };
 </script>
 
-  <title>HelloWorld硬件流程 | 子影的影子</title>
+  <title>浮点数机器表示 | 子影的影子</title>
   
 
 
@@ -214,7 +218,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kingloongwl.com/2019/08/26/HelloWorldHardFlow/">
+    <link itemprop="mainEntityOfPage" href="http://kingloongwl.com/2019/09/16/float_express/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Logan">
@@ -228,7 +232,7 @@
       <header class="post-header">
 
         
-          <h1 class="post-title" itemprop="name headline">HelloWorld硬件流程
+          <h1 class="post-title" itemprop="name headline">浮点数机器表示
 
             
           </h1>
@@ -245,19 +249,11 @@
                 
               
 
-              <time title="创建时间：2019-08-26 12:13:20" itemprop="dateCreated datePublished" datetime="2019-08-26T12:13:20+08:00">2019-08-26</time>
+              <time title="创建时间：2019-09-16 07:46:47 / 修改时间：08:00:10" itemprop="dateCreated datePublished" datetime="2019-09-16T07:46:47+08:00">2019-09-16</time>
             </span>
           
             
 
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-08-27 07:35:15" itemprop="dateModified" datetime="2019-08-27T07:35:15+08:00">2019-08-27</time>
-              </span>
             
           
 
@@ -273,8 +269,8 @@
       
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2019/08/26/HelloWorldHardFlow/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2019/08/26/HelloWorldHardFlow/" itemprop="commentCount"></span>
+    <a title="valine" href="/2019/09/16/float_express/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/09/16/float_express/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -290,31 +286,95 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>看《深入理解计算机系统》，开篇讲述了<code>HelloWorld</code>程序在计算机硬件（磁盘／主存／CPU）中的装载运行过程，比较底层的知识，特记录一下。</p><p>源代码如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    printf(&quot;hello world\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><a id="more"></a>
+        <p>浮点数常用的类型有<code>float</code>（4个字节）、<code>double</code>（8个字节），符点数类型的二进制表示相对比整型来说会复杂一些。通用表示公式为：</p><p><img src="/2019/09/16/float_express/1.png" alt=""></p><p>上标<code>S</code>表示符号位，<code>M</code>表示尾数，<code>E</code>表示指数。</p><p>不同的类型，用于表示上述三个数字的位数是不一样的。</p><p>对于<code>float</code>而言，最高位表示符号位，然后的8位表示指数位，最后23位表示尾数位。</p><a id="more"></a>
 
 
-<p>使用<code>gcc</code>编译完成后，生成了<code>hello</code>可执行程序。</p>
-<p>终端输入<code>./hello</code>后，按下回车键，会在屏幕上看到<code>hello world</code>字符串。</p>
-<p>那么运行<code>hello</code>程序时，各个硬件是怎么工作的？</p>
-<h3 id="硬件组成"><a href="#硬件组成" class="headerlink" title="硬件组成"></a>硬件组成</h3><p><img src="/2019/08/26/HelloWorldHardFlow/0.png" alt=""></p>
-<p>这张图应该不需要过多解释，都是计算机必备的硬件。各个设备之间通过总线相连，用以传递数据。</p>
-<h3 id="第一步：终端输入-hello"><a href="#第一步：终端输入-hello" class="headerlink" title="第一步：终端输入./hello"></a>第一步：终端输入<code>./hello</code></h3><p><img src="/2019/08/26/HelloWorldHardFlow/1.png" alt=""></p>
-<p>shell程序将字符读入寄存器中，然后再把它放到主存中。</p>
-<h3 id="第二步：输入回车"><a href="#第二步：输入回车" class="headerlink" title="第二步：输入回车"></a>第二步：输入回车</h3><p><img src="/2019/08/26/HelloWorldHardFlow/2.png" alt=""></p>
-<p>表示结束命令的输入。</p>
-<p>然后执行一系列指令来从磁盘加载<code>hello</code>文件，将内容放到主存中。</p>
-<p>加载的内容包括<code>hello</code>文件中的代码和数据，其中有<code>hello world\n</code>。</p>
-<h3 id="第三步：屏幕输出"><a href="#第三步：屏幕输出" class="headerlink" title="第三步：屏幕输出"></a>第三步：屏幕输出</h3><p><img src="/2019/08/26/HelloWorldHardFlow/3.png" alt=""></p>
-<p>CPU执行<code>hello</code>程序中的<code>main</code>函数的机器语言指令。</p>
-<p>这些指令将<code>hello world\n</code>字符串中的字节从主存复制到寄存器文件中。</p>
-<p>再从寄存器文件中复制到显示设备，最终显示在屏幕上。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>一个最简单的<code>HelloWorld</code>程序在硬件中进行了如此复杂的传递，需要各个硬件的协作为完成程序的运行。</p>
-<p>运行程序的过程中，系统进行了大量的数据复制，主要的复制操作如下：</p>
+
+
+<table>
+<thead>
+<tr>
+<th>符号位1</th>
+<th>指数位8</th>
+<th>尾数位23</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>000 0000 0</td>
+<td>000 0000 0000 0000 0000 0000</td>
+</tr>
+</tbody>
+</table>
+<p>对于<code>double</code>而言，最高位表示符号位，然后的11位表示指数位，最后的52位表示尾数位。</p>
+<table>
+<thead>
+<tr>
+<th>符号位1</th>
+<th>指数位11</th>
+<th>尾数位52</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>000 0000 0000</td>
+<td>0000 0000 0000 0000 0000 … 0000</td>
+</tr>
+</tbody>
+</table>
+<p>下面以<code>float</code>类型举例来说明浮点数的机器表示及转换方法。</p>
+<h2 id="机器码转浮点数"><a href="#机器码转浮点数" class="headerlink" title="机器码转浮点数"></a>机器码转浮点数</h2><p>机器码转浮点数其实就是计算<code>S</code>、<code>M</code>、<code>E</code>的值。</p>
+<p>其中<code>S</code>（符号）值比较简单，0为正，1为负，其它值的计算如下。</p>
+<p>根据指数位的不同，浮点数分为三类转换：规格化，非规格化，特殊值。</p>
+<p>分类方法比较简单</p>
 <ul>
-<li><code>hello</code>程序机器语言指令最初在磁盘上，加载时被复制到主存中，运行时又从主存复制到处理器中。</li>
-<li><code>hello world\n</code>字符串最初在磁盘上，然后被复制到主存，最后从主存复制到显示设备。</li>
+<li>指数位全部为0，则是<strong>非规格化转换</strong>。</li>
+<li>指数位全部为1，则是<strong>特殊值</strong>。</li>
+<li>其它情况是<strong>规格化转换</strong>。</li>
 </ul>
-<p>这些复制就是开销，影响程序性能。</p>
+<h3 id="规格化转换"><a href="#规格化转换" class="headerlink" title="规格化转换"></a>规格化转换</h3><p>对于<code>E</code>值的计算，需要借助一个<code>偏置值</code>来计算。偏置值以<code>Bias</code>来表示，由以下公式来计算，其中<code>k</code>表示指数的位数</p>
+<p><img src="/2019/09/16/float_express/2.png" alt=""></p>
+<p><code>float</code>类型的指数有8位，那么它的偏置值就是</p>
+<p><img src="/2019/09/16/float_express/3.png" alt=""></p>
+<p>将指号位的值（8位），转为十进制，再减去偏置值就是<code>E</code></p>
+<p><code>M</code>值由尾数位计算，尾数位转十进制时，指数为负，例如尾数位为<code>1101 0000</code>，那么转为十进制就是</p>
+<p><img src="/2019/09/16/float_express/4.png" alt=""></p>
+<p><strong>对于规则化而言，最终的M值还需要+1，即上述尾数计算出的M值是<code>0.8125 + 1 = 1.8125</code></strong></p>
+<p>举例来说，机器码为</p>
+<p><code>0    01111110    11010000000000000000000</code></p>
+<p>符号位，指数位，尾数位已用空白隔开。</p>
+<p>符号位是<code>0</code>，表示是一个正数</p>
+<p>根据指数位计算<code>E</code>是<code>126 - 127 = -1</code></p>
+<p>根据尾数位计算<code>M</code>是<code>1.8125</code></p>
+<p>代入公式中就是</p>
+<p><img src="/2019/09/16/float_express/5.png" alt=""></p>
+<h3 id="非规格化转换"><a href="#非规格化转换" class="headerlink" title="非规格化转换"></a>非规格化转换</h3><p>此种转换表示指数位全部为0，<code>E</code>值始终是<code>1 - Bias</code></p>
+<p><code>M</code>值的计算与规格化类似，<strong>不同的是，尾数转换成十进制后不需要<code>+1</code></strong></p>
+<p>例如，机器码为</p>
+<p><code>0 00000000 11010000000000000000000</code></p>
+<p><code>E</code>值是<code>1 - 127 = -126</code></p>
+<p><code>M</code>值是<code>0.8125</code></p>
+<p>代入公式中就是</p>
+<p><img src="/2019/09/16/float_express/6.png" alt=""></p>
+<h3 id="特殊值"><a href="#特殊值" class="headerlink" title="特殊值"></a>特殊值</h3><p>特殊值表示指数位全部为1，特殊值的结果有三个：正无穷，负无穷，非法数。</p>
+<p><img src="/2019/09/16/float_express/7.png" alt=""></p>
+<p>当尾数位全部为0时，根据首位符号位为判断是正无穷或负无穷。</p>
+<p>当尾数不为0时，则是非法数。</p>
+<h2 id="整型转换"><a href="#整型转换" class="headerlink" title="整型转换"></a>整型转换</h2><p>这里介绍一种整型数字转浮点型数字机器表示方法。</p>
+<p><code>int</code>类型转为<code>float</code>类型时，机器码应该怎么去修改。例如<code>int</code>类型的<code>12345</code>变成了<code>float</code>类型的<code>12345.0</code>。</p>
+<p><code>12345</code>的机器码表示是<code>00000000 00000000 00110000 00111001</code>，可以看作是</p>
+<p><img src="/2019/09/16/float_express/8.png" alt=""></p>
+<p><strong>符号位转换</strong></p>
+<p>正数，符号位是<code>0</code></p>
+<p><strong>指数位转换</strong></p>
+<p>利用数字中<code>2</code>的指数<code>13</code>计算浮动数的指数位是<code>13 + 127 = 140</code>转为二进制就是<code>10001100</code></p>
+<p><strong>尾数位转换</strong></p>
+<p>数字中的小数部分<code>1000000111001</code>就是浮点数中的尾数，位数不够在末尾补<code>0</code></p>
+<p><strong>结果及验证</strong></p>
+<p>将符号位、指数位、尾数位组合后，计算出的最终值是<code>0 10001100 10000001110010000000000</code></p>
+<p>反向使用浮点数规格化转换，正好是<code>12345.0</code></p>
 
     </div>
 
@@ -331,7 +391,7 @@
     <strong>本文作者： </strong>Logan</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://kingloongwl.com/2019/08/26/HelloWorldHardFlow/" title="HelloWorld硬件流程">http://kingloongwl.com/2019/08/26/HelloWorldHardFlow/</a>
+    <a href="http://kingloongwl.com/2019/09/16/float_express/" title="浮点数机器表示">http://kingloongwl.com/2019/09/16/float_express/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
@@ -346,9 +406,7 @@
           
           <div class="post-tags">
             
-              <a href="/tags/基础/" rel="tag"># 基础</a>
-            
-              <a href="/tags/笔记/" rel="tag"># 笔记</a>
+              <a href="/tags/笔记，底层，基础/" rel="tag"># 笔记，底层，基础</a>
             
           </div>
         
@@ -358,8 +416,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2019/08/08/ProgrammerDay/" rel="next" title="程序员的一天该怎么度过">
-                  <i class="fa fa-chevron-left"></i> 程序员的一天该怎么度过
+                <a href="/2019/09/03/unsigned_signed/" rel="next" title="无符号有符号表示">
+                  <i class="fa fa-chevron-left"></i> 无符号有符号表示
                 </a>
               
             </div>
@@ -367,10 +425,6 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/2019/09/03/unsigned_signed/" rel="prev" title="无符号有符号表示">
-                  无符号有符号表示 <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
@@ -483,7 +537,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#硬件组成"><span class="nav-number">1.</span> <span class="nav-text">硬件组成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第一步：终端输入-hello"><span class="nav-number">2.</span> <span class="nav-text">第一步：终端输入./hello</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二步：输入回车"><span class="nav-number">3.</span> <span class="nav-text">第二步：输入回车</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第三步：屏幕输出"><span class="nav-number">4.</span> <span class="nav-text">第三步：屏幕输出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#机器码转浮点数"><span class="nav-number">1.</span> <span class="nav-text">机器码转浮点数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#规格化转换"><span class="nav-number">1.1.</span> <span class="nav-text">规格化转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非规格化转换"><span class="nav-number">1.2.</span> <span class="nav-text">非规格化转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特殊值"><span class="nav-number">1.3.</span> <span class="nav-text">特殊值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#整型转换"><span class="nav-number">2.</span> <span class="nav-text">整型转换</span></a></li></ol></div>
             
 
           </div>
